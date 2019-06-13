@@ -22,6 +22,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         // Get an Instance form Firebase
         mAuth = FirebaseAuth.getInstance()
 
+        if (mAuth.currentUser != null) {
+            startActivity(Intent(this, MainActivity::class.java))
+        }
+
         // set the onclick listener method upon activity creation
         login_btn.setOnClickListener(this)
         txt_link.setOnClickListener(this)
