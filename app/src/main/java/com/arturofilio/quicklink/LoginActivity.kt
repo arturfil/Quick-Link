@@ -24,6 +24,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         // set the onclick listener method upon activity creation
         login_btn.setOnClickListener(this)
+        txt_link.setOnClickListener(this)
 
     }
 
@@ -44,6 +45,13 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 } else {
                     showToast("Please enter email and password")
                 }
+            }
+        }
+
+        when(view.id) {
+            R.id.txt_link -> {
+                startActivity(Intent(this,RegisterActivity::class.java))
+                finish()
             }
         }
     }
