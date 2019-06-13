@@ -13,6 +13,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private val TAG = "LoginActivity"
 
     // declare firebase variables
+
+    // comment for github
+
     private lateinit var mAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
