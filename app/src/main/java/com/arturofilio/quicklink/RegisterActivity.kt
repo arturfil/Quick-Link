@@ -12,6 +12,21 @@ import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity : AppCompatActivity(), View.OnClickListener {
+
+    private val TAG = "RegisterActivity"
+    private lateinit var mAuth: FirebaseAuth
+    private lateinit var mDatabase: DatabaseReference
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_register)
+
+        mAuth = FirebaseAuth.getInstance()
+        mDatabase = FirebaseDatabase.getInstance().reference
+        register_btn.setOnClickListener(this)
+
+    }
+
     override fun onClick(view: View) {
         when(view.id) {
             R.id.register_btn -> {
@@ -19,22 +34,6 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
     }
-
-    private val TAG = "RegisterActivity"
-
-
-    private lateinit var mAuth: FirebaseAuth
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register)
-
-        mAuth = FirebaseAuth.getInstance()
-
-        register_btn.setOnClickListener(this)
-
-    }
-
 
     private fun onRegister() {
         val fullName = edt_fullname.text.toString()
@@ -49,9 +48,18 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
                 mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener {
                         if(it.isSuccessful) {
-                            showToast("Registration was successful!")
-                            startActivity(Intent(this, MainActivity::class.java))
-                            finish()
+                            val user = mkUser(fullName, email)
+                            var reference = mDatabase.child("users").child(it.result.user.uid)
+                            reference.setValue(user)
+                                .addOnCompleteListener{
+                                    if (it.isSuccessful) {
+                                        showToast("Registration was successful!")
+                                        startActivity(Intent(this, MainActivity::class.java))
+                                        finish()
+                                    } else {
+                                        showToast("Something went wrong, please try again later")
+                                    }
+                                }
                         } else {
                             showToast("Something went wrong, please try again later")
                         }
@@ -62,5 +70,13 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
     }
+
+    private fun mkUser(fullName: String, email: String): User {
+        val username = mkUsername(fullName)
+        return User(name = fullName, username = username, email = email)
+    }
+
+    private fun mkUsername(fullName: String) =
+            fullName.toLowerCase().replace(" ", ".")
 
 }
