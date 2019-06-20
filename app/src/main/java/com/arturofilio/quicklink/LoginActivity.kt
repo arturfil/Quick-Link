@@ -27,7 +27,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         mAuth = FirebaseAuth.getInstance()
 
         if (mAuth.currentUser != null) {
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, ProfileActivity::class.java))
         }
 
         // set the onclick listener method upon activity creation
@@ -44,7 +44,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 if (validate(email, password)) {
                     mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
                         if(it.isSuccessful) {
-                            startActivity(Intent(this, MainActivity::class.java))
+                            startActivity(Intent(this, ProfileActivity::class.java))
                             finish()
                         } else {
                             showToast("You must have entered the wrong email or password")
@@ -59,7 +59,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         when(view.id) {
             R.id.txt_link -> {
                 startActivity(Intent(this,RegisterActivity::class.java))
-                finish()
             }
         }
     }
