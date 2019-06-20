@@ -54,7 +54,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
                                 .addOnCompleteListener{
                                     if (it.isSuccessful) {
                                         showToast("Registration was successful!")
-                                        startActivity(Intent(this, ProfileActivity::class.java))
+                                        startActivity(Intent(this, MainActivity::class.java))
                                         finish()
                                     } else {
                                         showToast("Something went wrong, please try again later")

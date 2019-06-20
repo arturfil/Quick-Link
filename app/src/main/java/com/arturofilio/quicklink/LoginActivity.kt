@@ -12,6 +12,8 @@ import kotlinx.android.synthetic.main.activity_login.*
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private val TAG = "LoginActivity"
+
+    // declare firebase variables
     private lateinit var mAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +25,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         if (mAuth.currentUser != null) {
             startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
 
         // set the onclick listener method upon activity creation
@@ -39,7 +42,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 if (validate(email, password)) {
                     mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
                         if(it.isSuccessful) {
-                            startActivity(Intent(this, ProfileActivity::class.java))
+                            startActivity(Intent(this, MainActivity::class.java))
                             finish()
                         } else {
                             showToast("You must have entered the wrong email or password")
