@@ -12,11 +12,6 @@ import kotlinx.android.synthetic.main.activity_login.*
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private val TAG = "LoginActivity"
-
-    // declare firebase variables
-
-    // comment for github
-
     private lateinit var mAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +22,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         mAuth = FirebaseAuth.getInstance()
 
         if (mAuth.currentUser != null) {
-            startActivity(Intent(this, ProfileActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
         }
 
         // set the onclick listener method upon activity creation

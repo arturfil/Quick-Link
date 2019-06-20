@@ -54,7 +54,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
                                 .addOnCompleteListener{
                                     if (it.isSuccessful) {
                                         showToast("Registration was successful!")
-                                        startActivity(Intent(this, MainActivity::class.java))
+                                        startActivity(Intent(this, ProfileActivity::class.java))
                                         finish()
                                     } else {
                                         showToast("Something went wrong, please try again later")
@@ -77,6 +77,6 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun mkUsername(fullName: String) =
-            fullName.toLowerCase().replace(" ", ".")
+        fullName.toLowerCase().replace(" ", ".")
 
 }
