@@ -1,10 +1,10 @@
-package com.arturofilio.quicklink
+package com.arturofilio.quicklink.activities
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import com.arturofilio.quicklink.R
 import com.arturofilio.quicklink.models.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -16,6 +16,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
     private val TAG = "RegisterActivity"
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mDatabase: DatabaseReference
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,8 +52,8 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
                             val user = mkUser(fullName, email)
                             var reference = mDatabase.child("users").child(it.result.user.uid)
                             reference.setValue(user)
-                                .addOnCompleteListener{
-                                    if (it.isSuccessful) {
+                                .addOnCompleteListener {
+                                    if(it.isSuccessful) {
                                         showToast("Registration was successful!")
                                         startActivity(Intent(this, MainActivity::class.java))
                                         finish()
@@ -60,11 +61,11 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
                                         showToast("Something went wrong, please try again later")
                                     }
                                 }
+
                         } else {
                             showToast("Something went wrong, please try again later")
                         }
                     }
-
             } else {
                 showToast("Make sure both passwords match")
             }
